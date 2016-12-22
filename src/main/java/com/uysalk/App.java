@@ -19,6 +19,7 @@ public class App extends Jooby{
             return "Hello world";
             }
         );
+        use ("graphql",new Graphql());
 
 
     }
