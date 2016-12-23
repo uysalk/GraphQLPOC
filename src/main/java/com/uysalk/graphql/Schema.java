@@ -1,7 +1,6 @@
 package com.uysalk.graphql;
 
 import com.uysalk.graphql.model.CartoonCharacter;
-import graphql.schema.GraphQLNonNull;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLSchema;
 
@@ -54,7 +53,7 @@ public class Schema {
                     .argument(newArgument()
                             .name("id")
                             .description("id of the character")
-                            .type(new GraphQLNonNull(GraphQLString)))
+                            .type(GraphQLString))
                     .dataFetcher(dfe -> { String id = (String) dfe.getArguments().get("id"); return characters.get(id);} ))
             .build();
 
