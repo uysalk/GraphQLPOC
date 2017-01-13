@@ -1,6 +1,5 @@
 package com.uysalk;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uysalk.graphql.Schema;
 import graphql.ExecutionResult;
@@ -30,13 +29,15 @@ public class Graphql extends Jooby  {
 
             Map<String, Object> payload = new HashMap<String, Object>();
             ObjectMapper mapper = new ObjectMapper();
-
+            Map<String, Object> variables = new HashMap<>();
             try {
-                payload = mapper.readValue(req.body().value(), new TypeReference<Map<String, String>>(){});
+                payload = mapper.readValue(req.body().value(),  Map.class );
             } catch (IOException e) {
-                throw new RuntimeException( "Could not parse request body as GraphQL map.");
+                throw new RuntimeException( "Could not parse request body as GraphQL map.",e);
             }
-            Map<String, Object> variables = mapper.readValue( payload.get("variables").toString(), new TypeReference<Map<String, Object>>(){});
+            if (payload.get("variables")!=null){
+                variables = (Map<String, Object>)  payload.get("variables");
+            }
             //(Map<String, Object>) payload.get("variables");
             ExecutionResult executionResult = graphql.execute(payload.get("query").toString(), null, this, variables);
             Map<String, Object> result = new LinkedHashMap<>();

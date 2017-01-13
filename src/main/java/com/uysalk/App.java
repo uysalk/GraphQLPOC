@@ -12,13 +12,10 @@ public class App extends Jooby{
     {
 
         use(new Jackson());
-        assets("/", "index.html");
+        assets("/", "graphiql.html");
         assets("/**");
 
-        get("/hw", req -> {
-            return "Hello world";
-            }
-        );
+
         use ("graphql",new Graphql());
 
 
